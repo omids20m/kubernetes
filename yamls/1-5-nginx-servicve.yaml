@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-servicve
+  name: nginx-service
   namespace: default
   labels:
     app: nginx-web
@@ -14,9 +14,7 @@ spec:
       protocol: TCP
       port: 80
       targetPort: web
-      nodePort: 80
     - name: websecure
       protocol: TCP
       port: 443
       targetPort: websecure
-      nodePort: 443
