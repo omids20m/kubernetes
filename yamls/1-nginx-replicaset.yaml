@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   labels:
+    app: nginx-web
     run: nginx
   name: nginx-replicaset
 spec:
