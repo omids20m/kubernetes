@@ -59,24 +59,4 @@ kubectl describe job hello-job
 kubectl delete job hello-job
 ```
 
-# Cron Jons
-
-## Deleteing jobs issues
-```
-kubectl delete cronjob <--->
-```
-when delete a job it mightly some of the jobs and pods works in background
-kubectl delete pods --all
-
-## successfulJobsHistoryLimit & failedJobsHistoryLimit
-by default retain the last 3 successful jobs and last 1 failed job.
-pods
-```
-successfulJobsHistoryLimit: 3
-failedJobsHistoryLimit: 1
-```
-
-## suspending cron jobs (kubectl apply, patch)
-
-
 https://kubernetes.io/docs/concepts/workloads/controllers/job/

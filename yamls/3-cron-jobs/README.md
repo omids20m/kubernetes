@@ -60,4 +60,14 @@ spec:
 there is a job running, what should I do?
 
 
-https://kubernetes.io/docs/concepts/workloads/controllers/job/
+
+
+
+
+
+```
+# idempotency
+```
+
+
+
