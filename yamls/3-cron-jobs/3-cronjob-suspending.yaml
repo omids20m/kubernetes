@@ -4,6 +4,7 @@ metadata:
   name: hello-cronjob
 spec:
   schedule: "* * * * *"
+  suspend: true
   jobTemplate:
     spec:
       template:

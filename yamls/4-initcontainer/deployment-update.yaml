@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: demo
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+      - name: webdata
+        emptyDir: {}
+      initContainers:
+      - name: web-content
+        image: busybox
+        volumeMounts:
+        - name: webdata
+          mountPath: "/webdata"
+        command: ["/bin/sh", "-c", 'echo "<h1>Hello <font color=blue>Hello kubernetes!</font></h1><br/><h1>Hello <font color=red>Hello kubernetes!</font></h1>" > /webdata/index.html']
+      containers:
+      - name: nginx
+        image: nginx:1.16.1 # Update the version of nginx from 1.14.2 to 1.16.1
+        volumeMounts:
+        - name: webdata
+          mountPath: "/usr/share/nginx/html"
+        ports:
+        - containerPort: 80
