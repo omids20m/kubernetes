@@ -4,8 +4,9 @@ metadata:
   name: hello-cronjob
 spec:
   schedule: "* * * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  backoffLimit: 1
   jobTemplate:
     spec:
       template:
