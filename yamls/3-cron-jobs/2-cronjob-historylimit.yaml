@@ -8,6 +8,7 @@ spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      backoffLimit: 2
       template:
         spec:
           containers:
