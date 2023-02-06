@@ -1,151 +1,57 @@
-Creating and exploring an nginx deployment 
-==========================================
+# Init Container
 
-This YAML file describes a Deployment that runs the nginx:1.14.2 Docker image:
+if any of init container fails, the pod will get restarted
+if you dont want to do that you can set restartPolicy=Never and the pod will never restarted 
 
-1. Create a Deployment based on the YAML file:
-```
-kubectl apply -f deployment.yaml -n demo
-```
-
-The output is similar to this:
-> deployment.apps/nginx-deployment created
-
-
-2. Display information about the Deployment:
-```
-kubectl describe deployment nginx-deployment -n demo
-```
-The output is similar to this:
->
-    Name:                   nginx-deployment
-    Namespace:              demo
-    CreationTimestamp:      Wed, 16 Feb 2022 18:29:06 +0330
-    Labels:                 <none>
-    Annotations:            deployment.kubernetes.io/revision: 1
-    Selector:               app=nginx
-    Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
-    StrategyType:           RollingUpdate
-    MinReadySeconds:        0
-    RollingUpdateStrategy:  25% max unavailable, 25% max surge
-    Pod Template:
-    Labels:  app=nginx
-    Containers:
-    nginx:
-        Image:        nginx:1.14.2
-        Port:         80/TCP
-        Host Port:    0/TCP
-        Environment:  <none>
-        Mounts:       <none>
-    Volumes:        <none>
-    Conditions:
-    Type           Status  Reason
-    ----           ------  ------
-    Available      True    MinimumReplicasAvailable
-    Progressing    True    NewReplicaSetAvailable
-    OldReplicaSets:  <none>
-    NewReplicaSet:   nginx-deployment-9456bbbf9 (2/2 replicas created)
-    Events:
-    Type    Reason             Age   From                   Message
-    ----    ------             ----  ----                   -------
-    Normal  ScalingReplicaSet  14s   deployment-controller  Scaled up replica set nginx-deployment-9456bbbf9 to 2
-
-
-1. List the Pods created by the deployment:
-```
-kubectl get pods -l app=nginx -n demo
-```
-The output is similar to this:
->
-    NAME                               READY   STATUS    RESTARTS   AGE
-    nginx-deployment-9456bbbf9-2t4xk   1/1     Running   0          55s
-    nginx-deployment-9456bbbf9-fmqg2   1/1     Running   0          55s
-
-1. Display information about a Pod:
-```
-kubectl describe pod nginx-deployment-9456bbbf9-fmqg2 -n demo
-```
-where `nginx-deployment-9456bbbf9-fmqg2` is the name of one of your Pods.
-
-Creating a Service 
-==================
-1. Firstway: using kubectl command
-```
-kubectl expose deployment/nginx-deployment --type=NodePort -n demo
-```
-
-The output is similar to this:
-> service/nginx-deployment exposed
-
-2. or Secondway: using yaml file
-```
-kubectl apply -f service.yaml -n demo
-```
-The output is similar to this:
-> service/nginx-service created
+## example
+1. Creating a volume shared between initContainer that creating an index.html file in the shared volume and exits
+2. The the actual Container (Nginx container) mounts the shared volume and index.html
 
 ```
-kubectl get all -n demo
+watch kubectl get all -o wide
+kubectl apply -f 1-deployment.yaml
+kubectl describe deploy nginx-deployment
 ```
 
-The output is similar to this:
-> 
-    NAME                                   READY   STATUS    RESTARTS   AGE
-    pod/nginx-deployment-9456bbbf9-2t4xk   1/1     Running   0          7m34s
-    pod/nginx-deployment-9456bbbf9-fmqg2   1/1     Running   0          7m34s
-
-    NAME                    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-    service/nginx-service   NodePort   10.233.56.169   <none>        80:30386/TCP   32s
-
-    NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-    deployment.apps/nginx-deployment   2/2     2            2           7m34s
-
-    NAME                                         DESIRED   CURRENT   READY   AGE
-    replicaset.apps/nginx-deployment-9456bbbf9   2         2         2       7m34s
-
-browse http://10.237.208.133:30386
-where `10.237.208.133` is ip address of one of your worker nodes
-
-
-Updating the deployment 
-=======================
-
-1. Apply the new YAML file:
 ```
-kubectl apply -f deployment-update.yaml -n demo
+watch kubectl get all -o wide
+##kubectl expose deploy nginx-deployment --type NodePort --port 80
+kubectl apply -f 2-service.yaml
 ```
 
-2. Watch the deployment create pods with new names and delete the old pods:
+browse http://kworker1:32321
+
+## Scale deployment 
 ```
-kubectl get pods -l app=nginx -n demo
+watch kubectl get all -o wide
+kubectl scale deploy nginx-deploy --replicas=2
 ```
+## Multiple init containers
+you can have multiple initContainers
+init containers runs sequentially
 
-browse http://10.237.208.133:30386
-where `10.237.208.133` is ip address of one of your worker nodes
-
-
-Scaling the application by increasing the replica count 
-=======================================================
-You can increase the number of Pods in your Deployment by applying a new YAML file. This YAML file sets replicas to 4, which specifies that the Deployment should have four Pods:
-
-1. Apply the new YAML file:
 ```
-kubectl apply -f deployment-scale.yaml -n demo
+delete -f 1-deployment.yaml
+delete -f 2-service.yaml
 ```
 
-2. Verify that the Deployment has four Pods:
-```
-kubectl get pods -l app=nginx -n demo
-```
-The output is similar to this:
->
+## make init container fail
+change command to raise an error
 
-Deleting a deployment
-=====================
-Delete the deployment by name:
+watch kubectl get all -o wide
+
+it will restart the initContainer 
+and keeps on restarting untill all initContainers succeeded 
+
+kubectl describe deploy nginx-deployment
+
+State
+  Reason: CrashLoopBackoff
+  Message: ........
+  ...
+  ...
+  Restart Count: 3
+
 ```
-kubectl delete deployment nginx-deployment -n demo
+delete ...
 ```
-
-
-
