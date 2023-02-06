@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-job
+  namespace: default
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["ls", "/fake-directory-will-faile-command"]
+      restartPolicy: Never
