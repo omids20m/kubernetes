@@ -42,8 +42,9 @@ kubectl describe secret
 
 ```
 kubectl exec -it secret-demo-deploy-<podname> [-c <Container Name>] -- sh
+# kubectl exec -it secret-demo-deploy-b6b95b9-k4m2q -- sh 
 env | grep username
 echo $username
 ```
 
-## Secret in pods
+## Update secret
