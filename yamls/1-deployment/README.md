@@ -1,85 +1,50 @@
-<<<<<<< HEAD:yamls/README.md
-
-Play with kubernetes pods / replicaset / deployment
-
-## Deploy a single pod
 ```
-kubectl apply -f 1-nginx-pod.yaml
-kubectl get pods
-kubectl get pods -o wide
-kubectl get events
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-pod.yaml
-#kubectl delete pod <pod-name>
+username: omid
+password: P@ssw0rd
 ```
 
-## Deploy a replicaset
+## Secrets
 ```
-kubectl apply -f 1-nginx-replicaset.yaml
-kubectl get replicaset
-kubectl get all
-kubectl delete pod <one-of-pod-names>
-kubectl get all
-kubectl delete -f 1-nginx-replicaset.yaml
-```
-
-```
-kubectl apply -f 1-nginx-deployment.yaml
-kubectl get deployment
-kubectl get all
-kubectl describe pod <one-of-pod-names>
-kubectl get replicaset
-kubectl describe replicaset <replicaset-name>
-kubectl delete -f 1-nginx-replicaset.yaml
-```
-
-## how to find out the list of pods with the lable of app=nginx-web
-```
-kubectl get pods -l app=nginx-web
-```
-
-## scale
-```
-kubectl scale deploy nginx-deploy --replicas=3
-```
-
-## namespaces
-kubectl get pods -n kube-system
-
-kubectl get pods
-kubectl get pods <pod-name> -o yaml
-kubectl get pods <pod-name> -o yaml > /tmp/my-pod.yamp
-
-kubectl exec -it nginx -- sh
-
-
-
-=======
-
-## Deploy a single pod
-```
-kubectl apply -f 1-nginx-pod.yaml
-kubectl get pods -o wide
-kubectl get events
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-pod.yaml
-#kubectl delete pod <pod-name>
-```
-
-## Deploy a replicaset
-```
-kubectl apply -f 1-nginx-replicaset.yaml
-kubectl get replicaset -o wide
-kubectl get events
-
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-replicaset.yaml
+kubectl get secret --help
+kubectl create secret --help
+kubectl create secret generic --help
 ```
 
 
-kubectl exec -it nginx -- sh
+## Encoding secret values 
+```
+echo -n 'omid' | base64
+b21pZA==
+echo -n 'b21pZA==' | base64 --decode
 
+echo -n 'P@ssw0rd' | base64
+UEBzc3cwcmQ=
+echo -n 'UEBzc3cwcmQ=' | base64 --decode
 
+kubectl apply -f 1-secret-demo.yaml
 
+kubectl get secret
+kubectl describe secrets
 
->>>>>>> 3571823ccae22dce0c25709cacfc5b543cf9dd91:yamls/1-deployment/README.md
+```
+
+## Creating secret
+```
+#kubectl create secret generic secret-demo1 --from-literal=username=omid --from-literal=password=P@ssw0rd
+#kubectl create secret generic secret-demo2 --from-literal=name=omid --from-file=secret-file.txt
+
+kubectl apply -f 1-secret-demo.yaml
+kubectl apply -f 2-deployment-secret-env.yaml
+
+kubectl get secret
+kubectl describe secret
+```
+
+```
+kubectl exec -it secret-demo-deploy-<podname> [-c <Container Name>] -- sh
+# kubectl exec -it secret-demo-deploy-b6b95b9-k4m2q -- sh 
+env | grep username
+echo $username
+```
+
+## Updating secrets
