@@ -1,5 +1,3 @@
-<<<<<<< HEAD:yamls/README.md
-
 Play with kubernetes pods / replicaset / deployment
 
 ## Deploy a single pod
@@ -80,6 +78,3 @@ kubectl delete -f 1-nginx-replicaset.yaml
 kubectl exec -it nginx -- sh
 
 
-
-
->>>>>>> 3571823ccae22dce0c25709cacfc5b543cf9dd91:yamls/1-deployment/README.md
