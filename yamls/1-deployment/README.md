@@ -1,57 +1,59 @@
+<<<<<<< HEAD
 Play with kubernetes pods / replicaset / deployment
 
 ## Deploy a single pod
+=======
+>>>>>>> d97ee8a138d57ee845b0041f99127a48e7476d9e
 ```
-kubectl apply -f 1-nginx-pod.yaml
-kubectl get pods
-kubectl get pods -o wide
-kubectl get events
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-pod.yaml
-#kubectl delete pod <pod-name>
+username: omid
+password: P@ssw0rd
 ```
 
-## Deploy a replicaset
+## Secrets
 ```
-kubectl apply -f 1-nginx-replicaset.yaml
-kubectl get replicaset
-kubectl get all
-kubectl delete pod <one-of-pod-names>
-kubectl get all
-kubectl delete -f 1-nginx-replicaset.yaml
+kubectl get secret --help
+kubectl create secret --help
+kubectl create secret generic --help
 ```
 
-```
-kubectl apply -f 1-nginx-deployment.yaml
-kubectl get deployment
-kubectl get all
-kubectl describe pod <one-of-pod-names>
-kubectl get replicaset
-kubectl describe replicaset <replicaset-name>
-kubectl delete -f 1-nginx-replicaset.yaml
-```
 
-## how to find out the list of pods with the lable of app=nginx-web
+## Encoding secret values 
 ```
-kubectl get pods -l app=nginx-web
-```
+echo -n 'omid' | base64
+b21pZA==
+echo -n 'b21pZA==' | base64 --decode
 
-## scale
-```
-kubectl scale deploy nginx-deploy --replicas=3
+echo -n 'P@ssw0rd' | base64
+UEBzc3cwcmQ=
+echo -n 'UEBzc3cwcmQ=' | base64 --decode
+
+kubectl apply -f 1-secret-demo.yaml
+
+kubectl get secret
+kubectl describe secrets
+
 ```
 
-## namespaces
-kubectl get pods -n kube-system
+## Creating secret
+```
+#kubectl create secret generic secret-demo1 --from-literal=username=omid --from-literal=password=P@ssw0rd
+#kubectl create secret generic secret-demo2 --from-literal=name=omid --from-file=secret-file.txt
 
-kubectl get pods
-kubectl get pods <pod-name> -o yaml
-kubectl get pods <pod-name> -o yaml > /tmp/my-pod.yamp
+kubectl apply -f 1-secret-demo.yaml
+kubectl apply -f 2-deployment-secret-env.yaml
 
-kubectl exec -it nginx -- sh
+kubectl get secret
+kubectl describe secret
+```
 
+```
+kubectl exec -it secret-demo-deploy-<podname> [-c <Container Name>] -- sh
+# kubectl exec -it secret-demo-deploy-b6b95b9-k4m2q -- sh 
+env | grep username
+echo $username
+```
 
-
+<<<<<<< HEAD
 =======
 
 ## Deploy a single pod
@@ -78,3 +80,5 @@ kubectl delete -f 1-nginx-replicaset.yaml
 kubectl exec -it nginx -- sh
 
 
+=======
+## Updating secrets
