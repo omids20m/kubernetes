@@ -47,4 +47,4 @@ env | grep username
 echo $username
 ```
 
-## Update secret
+## Updating secrets
