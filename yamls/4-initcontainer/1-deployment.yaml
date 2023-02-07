@@ -32,7 +32,7 @@ spec:
         volumeMounts:
         - name: shared-volume
           mountPath: "/webdata"
-        command: ["/bin/sh", "-c", 'dguyfguahdflkdhfkjadfhl']
+        command: ["/bin/sh", "-c", 'echo "<h1><font color="red">Hello kubernetes from initContainer</font></h1>" > /webdata/index.html']
       #restartPolicy: Never
       
       containers:
