@@ -15,6 +15,7 @@ spec:
         app: nginx
     
     spec:
+      restartPolicy: OnFailure
       volumes:
       - name: shared-volume
         emptyDir: {}
@@ -33,7 +34,6 @@ spec:
         - name: shared-volume
           mountPath: "/webdata"
         command: ["/bin/sh", "-c", 'dguyfguahdflkdhfkjadfhl']
-      restartPolicy: OnFailure
       
       containers:
       - name: nginx
