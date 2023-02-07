@@ -33,7 +33,7 @@ spec:
         - name: shared-volume
           mountPath: "/webdata"
         command: ["/bin/sh", "-c", 'dguyfguahdflkdhfkjadfhl']
-      # restartPolicy: Never
+        restartPolicy: Never
       
       containers:
       - name: nginx
