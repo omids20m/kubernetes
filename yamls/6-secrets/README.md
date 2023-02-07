@@ -1,8 +1,7 @@
-`
-DB_Host: DatabaseHost
-DB_User: user1
-DB_Password: P@ssw0rd
-`
+```
+username: omid
+password: P@ssw0rd
+```
 
 ## Secrets
 ```
@@ -21,13 +20,12 @@ echo -n 'b21pZA==' | base64 --decode
 echo -n 'P@ssw0rd' | base64
 UEBzc3cwcmQ=
 echo -n 'UEBzc3cwcmQ=' | base64 --decode
-```
-kubectl apply -f 1-app-secret.yaml
+
+kubectl apply -f 1-secret-demo.yaml
 
 kubectl get secret
 kubectl describe secrets
 
-kubectl get secret app-secret -o yaml
 ```
 
 ## Creating secret
@@ -40,7 +38,6 @@ kubectl apply -f 2-deployment-secret-env.yaml
 
 kubectl get secret
 kubectl describe secret
-kubectl describe secret -o yaml
 ```
 
 ```
