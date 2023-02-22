@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-Play with kubernetes pods / replicaset / deployment
-
-## Deploy a single pod
-=======
->>>>>>> d97ee8a138d57ee845b0041f99127a48e7476d9e
 ```
 username: omid
 password: P@ssw0rd
@@ -53,32 +47,4 @@ env | grep username
 echo $username
 ```
 
-<<<<<<< HEAD
-=======
-
-## Deploy a single pod
-```
-kubectl apply -f 1-nginx-pod.yaml
-kubectl get pods -o wide
-kubectl get events
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-pod.yaml
-#kubectl delete pod <pod-name>
-```
-
-## Deploy a replicaset
-```
-kubectl apply -f 1-nginx-replicaset.yaml
-kubectl get replicaset -o wide
-kubectl get events
-
-kubectl describe pod nginx
-kubectl delete -f 1-nginx-replicaset.yaml
-```
-
-
-kubectl exec -it nginx -- sh
-
-
-=======
 ## Updating secrets

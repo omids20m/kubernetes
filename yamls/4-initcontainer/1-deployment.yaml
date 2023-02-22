@@ -25,8 +25,15 @@ spec:
         volumeMounts:
         - name: shared-volume
           mountPath: "/webdata"
-        command: ["/bin/sh", "-c", 'echo "<h1>Hello Hello kubernetes from initContainer</h1>" > /webdata/index.html']
-      # restartPolicy: Never
+        command: ["/bin/sh", "-c", 'echo "<h1>Hello kubernetes from initContainer</h1>" > /webdata/index.html']
+
+      - name: web-content-creator-2
+        image: busybox
+        volumeMounts:
+        - name: shared-volume
+          mountPath: "/webdata"
+        command: ["/bin/sh", "-c", 'echo "<h1><font color="red">Hello kubernetes from initContainer</font></h1>" > /webdata/red.html']
+      #restartPolicy: Never
       
       containers:
       - name: nginx
