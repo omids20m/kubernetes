@@ -1,5 +1,3 @@
-namespance: default
-
 resources:
 - deployment.yaml
 - service.yaml

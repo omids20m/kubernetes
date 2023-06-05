@@ -1,8 +1,6 @@
 #bases:
 #- ../../base
 
-namespance: default
-
 namePrefix: staging-
 
 commonLables:
