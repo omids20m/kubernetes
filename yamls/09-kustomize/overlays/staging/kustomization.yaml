@@ -3,7 +3,7 @@
 
 namePrefix: staging-
 
-commonLables:
+commonLabels:
   tier: frontend
   env: staging
 
