@@ -1,0 +1,20 @@
+#bases:
+#- ../../base
+
+namespance: default
+
+namePrefix: staging-
+
+commonLables:
+  tier: frontend
+
+commonLabels:
+  env: staging
+
+commonAnnotations:
+  owner: hiDevOps
+
+resources:
+- ../../base/deployment.yaml
+- ../../base/service.yaml
+#- ../base

@@ -1,0 +1,13 @@
+namespance: default
+
+name-Prefix: prod-
+
+commonLables:
+  tier: frontend
+
+commonAnnotations:
+  owner: someone
+
+resources:
+- ./../deployment.yaml
+- ./../service.yaml
