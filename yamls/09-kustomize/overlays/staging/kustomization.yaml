@@ -5,8 +5,6 @@ namePrefix: staging-
 
 commonLables:
   tier: frontend
-
-commonLabels:
   env: staging
 
 commonAnnotations:
