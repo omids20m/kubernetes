@@ -1,3 +1,6 @@
+bases:
+- ../../base/
+
 namePrefix: prod-
 
 commonLabels:
@@ -6,6 +9,3 @@ commonLabels:
 
 commonAnnotations:
   owner: hiDevOps
-
-resources:
-- ../../base/
