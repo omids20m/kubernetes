@@ -1,13 +1,11 @@
-namespance: default
+namePrefix: prod-
 
-name-Prefix: prod-
-
-commonLables:
+commonLabels:
   tier: frontend
+  env: prod
 
 commonAnnotations:
-  owner: someone
+  owner: hiDevOps
 
 resources:
-- ./../deployment.yaml
-- ./../service.yaml
+- ../../base/

@@ -1,0 +1,11 @@
+kind: Deployment
+metadata:
+  name: nginx-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: nginx-deploy
+        resources:
+          limits:
+            cpu: 700m
