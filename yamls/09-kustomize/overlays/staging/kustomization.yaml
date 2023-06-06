@@ -11,5 +11,5 @@ commonAnnotations:
   owner: hiDevOps
 
 replicas:
-  name: nginx-deploy
+- name: nginx-deploy
   count: 3
