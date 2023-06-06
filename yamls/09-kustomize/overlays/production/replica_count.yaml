@@ -2,4 +2,4 @@ kind: Deployment
 metadata:
   name: nginx-deploy
 spec:
-  replicas: 5
+  replicas: 10
