@@ -1,3 +1,6 @@
+bases:
+- ../../base/
+
 namePrefix: staging-
 
 commonLabels:
@@ -7,8 +10,5 @@ commonLabels:
 commonAnnotations:
   owner: hiDevOps
 
-resources:
-- ../../base/
-
 patches:
-- replica_count.yaml
+  - limits.yaml
