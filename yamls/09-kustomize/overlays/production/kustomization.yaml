@@ -9,3 +9,7 @@ commonLabels:
 
 commonAnnotations:
   owner: hiDevOps
+
+replicas:
+- name: nginx-deploy
+  count: 5
