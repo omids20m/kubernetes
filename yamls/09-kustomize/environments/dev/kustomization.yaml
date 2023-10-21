@@ -1,0 +1,37 @@
+bases:
+- ../../base/
+
+# resources:
+#   - volumes.yaml
+
+namePrefix: prod-
+
+commonLabels:
+  tier: frontend
+  env: prod
+
+commonAnnotations:
+  owner: hiDevOps
+
+replicas:
+- name: nginx-deploy
+  count: 5
+
+configMapGenerator:
+  - name: dbParams
+    files:
+    - db.toml
+  - name: javaServerEnvVars
+    literals:
+      - "JAVA_HOME=/opt/java/jdk"
+
+# patches:
+#   - patch-requests.yaml
+
+# patchesJson6902: # todo: draft
+# - target:
+#   path: volmount-patch.yaml
+#     group: apps/v1
+#     version: v1
+#     kind: Deployment
+#     name: nginx-deployment

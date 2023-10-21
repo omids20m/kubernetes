@@ -1,0 +1,81 @@
+apiVersion: v1
+data:
+  db.toml: "server = 192.168.0.1\r\nports = [ 8001, 8002 ]"
+kind: ConfigMap
+metadata:
+  annotations:
+    owner: hiDevOps
+  labels:
+    env: prod
+    tier: frontend
+  name: prod-dbParams-d68dd78fgm
+---
+apiVersion: v1
+data:
+  JAVA_HOME: /opt/java/jdk
+kind: ConfigMap
+metadata:
+  annotations:
+    owner: hiDevOps
+  labels:
+    env: prod
+    tier: frontend
+  name: prod-javaServerEnvVars-5522d99bmg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    owner: hiDevOps
+  labels:
+    app: nginx-web
+    env: prod
+    tier: frontend
+  name: prod-nginx-service
+  namespace: default
+spec:
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: web
+  - name: websecure
+    port: 443
+    protocol: TCP
+    targetPort: websecure
+  selector:
+    app: nginx-web
+    env: prod
+    tier: frontend
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    owner: hiDevOps
+  labels:
+    app: nginx-web
+    env: prod
+    tier: frontend
+  name: prod-nginx-deploy
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx-web
+      env: prod
+      tier: frontend
+  template:
+    metadata:
+      annotations:
+        owner: hiDevOps
+      labels:
+        app: nginx-web
+        env: prod
+        tier: frontend
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
