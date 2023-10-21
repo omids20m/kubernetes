@@ -1,0 +1,15 @@
+bases:
+- ../../base/
+
+namePrefix: staging-
+
+commonLabels:
+  tier: frontend
+  env: staging
+
+commonAnnotations:
+  owner: hiDevOps
+
+replicas:
+- name: nginx-deploy
+  count: 2
